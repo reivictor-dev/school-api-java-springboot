@@ -1,11 +1,14 @@
 package com.school.data.vo.v1;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.school.model.Grade;
 
 @JsonPropertyOrder({ "id", "firstName", "lastName", "email", "age", "weight", "height" })
 public class StudentVO extends RepresentationModel<StudentVO> implements Serializable {
@@ -25,6 +28,8 @@ public class StudentVO extends RepresentationModel<StudentVO> implements Seriali
     private Double weight;
 
     private Double height;
+
+    private List<Grade> grades = new ArrayList<>();
 
     public StudentVO() {
     }
@@ -89,6 +94,14 @@ public class StudentVO extends RepresentationModel<StudentVO> implements Seriali
         this.height = height;
     }
 
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -100,6 +113,7 @@ public class StudentVO extends RepresentationModel<StudentVO> implements Seriali
         result = prime * result + ((age == null) ? 0 : age.hashCode());
         result = prime * result + ((weight == null) ? 0 : weight.hashCode());
         result = prime * result + ((height == null) ? 0 : height.hashCode());
+        result = prime * result + ((grades == null) ? 0 : grades.hashCode());
         return result;
     }
 
@@ -146,6 +160,11 @@ public class StudentVO extends RepresentationModel<StudentVO> implements Seriali
             if (other.height != null)
                 return false;
         } else if (!height.equals(other.height))
+            return false;
+        if (grades == null) {
+            if (other.grades != null)
+                return false;
+        } else if (!grades.equals(other.grades))
             return false;
         return true;
     }

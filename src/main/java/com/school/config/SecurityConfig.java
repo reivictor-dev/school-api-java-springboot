@@ -48,7 +48,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/api/**").authenticated()
-                        .requestMatchers("/users").denyAll())
+                        .requestMatchers("/users").denyAll()
+                        .anyRequest().authenticated())
                 .cors(cors -> {
                 })
                 .apply(new JwtConfig(tokenProvider));
