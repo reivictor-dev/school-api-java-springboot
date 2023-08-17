@@ -10,13 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.school.controllers.StudentController;
-import com.school.data.vo.v1.GradeVO;
 import com.school.data.vo.v1.StudentVO;
 import com.school.exceptions.RequiredObjectIsNullException;
 import com.school.exceptions.ResourceNotFoundException;
-import com.school.mapper.GradeMapper;
 import com.school.mapper.StudentMapper;
-import com.school.model.Grade;
 import com.school.model.Student;
 import com.school.repository.GradeRepository;
 import com.school.repository.StudentRepository;
@@ -98,46 +95,4 @@ public class StudentServices {
         repository.delete(entity);
     }
 
-    // ---->> GRADES RELATED <<----
-
-    public StudentVO createGrade(Long studentId, GradeVO grade) {
-        var student = repository.findById(studentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found!"));
-
-        var newGrade = GradeMapper.INSTANCE.toEntity(grade);
-        newGrade.setStudent(student);
-
-        var savedGrade = gradeRepository.save(newGrade);
-        student.getGrades().add(savedGrade);
-
-        var savedStudent = repository.save(student);
-
-        // Atualizar a lista de notas do student com a nova nota
-        savedStudent.setGrades(student.getGrades());
-
-        return StudentMapper.INSTANCE.toVO(savedStudent);
-    }
-
-    public StudentVO updateGrade(Long studentId, Long gradeId, GradeVO updatedGradeVO) throws Exception {
-        Student student = repository.findById(studentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
-
-        for (Grade grade : student.getGrades()) {
-            if (grade.getId().equals(gradeId)) {
-
-                grade.setMath(updatedGradeVO.getMath());
-                grade.setChemistry(updatedGradeVO.getChemistry());
-                grade.setScience(updatedGradeVO.getScience());
-                grade.setEnglish(updatedGradeVO.getEnglish());
-                GradeMapper.INSTANCE.toVO(grade);
-            } else {
-                throw new ResourceNotFoundException(
-                        "Verify the correct grade ID for this student.");
-            }
-
-            Student savedStudent = repository.save(student);
-            return StudentMapper.INSTANCE.toVO(savedStudent);
-        }
-        throw new ResourceNotFoundException("Grade not found!");
-    }
 }

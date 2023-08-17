@@ -36,7 +36,7 @@ public class GradeController {
     @PostMapping("/create/{studentId}")
     public GradeVO create(
             @PathVariable Long studentId,
-            @RequestBody GradeVO grade) {
+            @RequestBody GradeVO grade) throws Exception {
         return services.createGradeByStudentId(studentId, grade);
     }
 
