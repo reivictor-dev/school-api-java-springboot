@@ -8,7 +8,6 @@ import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.school.model.Grade;
 
 @JsonPropertyOrder({ "id", "firstName", "lastName", "email", "age", "weight", "height" })
 public class StudentVO extends RepresentationModel<StudentVO> implements Serializable {
@@ -29,13 +28,9 @@ public class StudentVO extends RepresentationModel<StudentVO> implements Seriali
 
     private Double height;
 
-    private List<Grade> grades = new ArrayList<>();
+    private List<GradeVO> grades = new ArrayList<>();
 
     public StudentVO() {
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 
     public Long getKey() {
@@ -94,11 +89,11 @@ public class StudentVO extends RepresentationModel<StudentVO> implements Seriali
         this.height = height;
     }
 
-    public List<Grade> getGrades() {
+    public List<GradeVO> getGrades() {
         return grades;
     }
 
-    public void setGrades(List<Grade> grades) {
+    public void setGrades(List<GradeVO> grades) {
         this.grades = grades;
     }
 

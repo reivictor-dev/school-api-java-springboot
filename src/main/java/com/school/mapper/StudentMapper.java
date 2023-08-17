@@ -14,6 +14,7 @@ public interface StudentMapper {
     StudentMapper INSTANCE = Mappers.getMapper(StudentMapper.class);
 
     @Mapping(source = "id", target = "key")
+    @Mapping(target = "grades", source = "grades")
     StudentVO toVO(Student student);
 
     @Mapping(source = "key", target = "id")

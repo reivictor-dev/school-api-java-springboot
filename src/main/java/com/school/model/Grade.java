@@ -2,8 +2,6 @@ package com.school.model;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,23 +21,26 @@ public class Grade implements Serializable {
     private Long id;
 
     @Column
-    private double math;
+    private Double math;
 
     @Column
-    private double chemistry;
+    private Double chemistry;
 
     @Column
-    private double science;
+    private Double science;
 
     @Column
-    private double english;
+    private Double english;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    @JsonIgnore
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
 
     public Grade() {
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
     }
 
     public Long getId() {
@@ -50,35 +51,35 @@ public class Grade implements Serializable {
         this.id = id;
     }
 
-    public double getMath() {
+    public Double getMath() {
         return math;
     }
 
-    public void setMath(double math) {
+    public void setMath(Double math) {
         this.math = math;
     }
 
-    public double getChemistry() {
+    public Double getChemistry() {
         return chemistry;
     }
 
-    public void setChemistry(double chemistry) {
+    public void setChemistry(Double chemistry) {
         this.chemistry = chemistry;
     }
 
-    public double getScience() {
+    public Double getScience() {
         return science;
     }
 
-    public void setScience(double science) {
+    public void setScience(Double science) {
         this.science = science;
     }
 
-    public double getEnglish() {
+    public Double getEnglish() {
         return english;
     }
 
-    public void setEnglish(double english) {
+    public void setEnglish(Double english) {
         this.english = english;
     }
 
@@ -95,15 +96,10 @@ public class Grade implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        long temp;
-        temp = Double.doubleToLongBits(math);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(chemistry);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(science);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(english);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
+        result = prime * result + ((math == null) ? 0 : math.hashCode());
+        result = prime * result + ((chemistry == null) ? 0 : chemistry.hashCode());
+        result = prime * result + ((science == null) ? 0 : science.hashCode());
+        result = prime * result + ((english == null) ? 0 : english.hashCode());
         result = prime * result + ((student == null) ? 0 : student.hashCode());
         return result;
     }
@@ -122,13 +118,25 @@ public class Grade implements Serializable {
                 return false;
         } else if (!id.equals(other.id))
             return false;
-        if (Double.doubleToLongBits(math) != Double.doubleToLongBits(other.math))
+        if (math == null) {
+            if (other.math != null)
+                return false;
+        } else if (!math.equals(other.math))
             return false;
-        if (Double.doubleToLongBits(chemistry) != Double.doubleToLongBits(other.chemistry))
+        if (chemistry == null) {
+            if (other.chemistry != null)
+                return false;
+        } else if (!chemistry.equals(other.chemistry))
             return false;
-        if (Double.doubleToLongBits(science) != Double.doubleToLongBits(other.science))
+        if (science == null) {
+            if (other.science != null)
+                return false;
+        } else if (!science.equals(other.science))
             return false;
-        if (Double.doubleToLongBits(english) != Double.doubleToLongBits(other.english))
+        if (english == null) {
+            if (other.english != null)
+                return false;
+        } else if (!english.equals(other.english))
             return false;
         if (student == null) {
             if (other.student != null)

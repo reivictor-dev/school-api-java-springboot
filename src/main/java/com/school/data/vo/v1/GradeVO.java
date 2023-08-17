@@ -5,23 +5,25 @@ import java.io.Serializable;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.school.model.Student;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder({ "id", "math", "chemistry", "science", "english" })
 public class GradeVO extends RepresentationModel<GradeVO> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonProperty("id")
     private Long key;
 
-    private double math;
+    private Double math;
 
-    private double chemistry;
+    private Double chemistry;
 
-    private double science;
+    private Double science;
 
-    private double english;
+    private Double english;
 
-    private Student student;
+    @JsonProperty("studentId")
+    private Long studentId;
 
     public GradeVO() {
 
@@ -39,44 +41,44 @@ public class GradeVO extends RepresentationModel<GradeVO> implements Serializabl
         this.key = key;
     }
 
-    public double getMath() {
+    public Double getMath() {
         return math;
     }
 
-    public void setMath(double math) {
+    public void setMath(Double math) {
         this.math = math;
     }
 
-    public double getChemistry() {
+    public Double getChemistry() {
         return chemistry;
     }
 
-    public void setChemistry(double chemistry) {
+    public void setChemistry(Double chemistry) {
         this.chemistry = chemistry;
     }
 
-    public double getScience() {
+    public Double getScience() {
         return science;
     }
 
-    public void setScience(double science) {
+    public void setScience(Double science) {
         this.science = science;
     }
 
-    public double getEnglish() {
+    public Double getEnglish() {
         return english;
     }
 
-    public void setEnglish(double english) {
+    public void setEnglish(Double english) {
         this.english = english;
     }
 
-    public Student getStudent() {
-        return student;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     @Override
@@ -84,16 +86,11 @@ public class GradeVO extends RepresentationModel<GradeVO> implements Serializabl
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result + ((key == null) ? 0 : key.hashCode());
-        long temp;
-        temp = Double.doubleToLongBits(math);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(chemistry);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(science);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(english);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        result = prime * result + ((student == null) ? 0 : student.hashCode());
+        result = prime * result + ((math == null) ? 0 : math.hashCode());
+        result = prime * result + ((chemistry == null) ? 0 : chemistry.hashCode());
+        result = prime * result + ((science == null) ? 0 : science.hashCode());
+        result = prime * result + ((english == null) ? 0 : english.hashCode());
+        result = prime * result + ((studentId == null) ? 0 : studentId.hashCode());
         return result;
     }
 
@@ -111,18 +108,30 @@ public class GradeVO extends RepresentationModel<GradeVO> implements Serializabl
                 return false;
         } else if (!key.equals(other.key))
             return false;
-        if (Double.doubleToLongBits(math) != Double.doubleToLongBits(other.math))
-            return false;
-        if (Double.doubleToLongBits(chemistry) != Double.doubleToLongBits(other.chemistry))
-            return false;
-        if (Double.doubleToLongBits(science) != Double.doubleToLongBits(other.science))
-            return false;
-        if (Double.doubleToLongBits(english) != Double.doubleToLongBits(other.english))
-            return false;
-        if (student == null) {
-            if (other.student != null)
+        if (math == null) {
+            if (other.math != null)
                 return false;
-        } else if (!student.equals(other.student))
+        } else if (!math.equals(other.math))
+            return false;
+        if (chemistry == null) {
+            if (other.chemistry != null)
+                return false;
+        } else if (!chemistry.equals(other.chemistry))
+            return false;
+        if (science == null) {
+            if (other.science != null)
+                return false;
+        } else if (!science.equals(other.science))
+            return false;
+        if (english == null) {
+            if (other.english != null)
+                return false;
+        } else if (!english.equals(other.english))
+            return false;
+        if (studentId == null) {
+            if (other.studentId != null)
+                return false;
+        } else if (!studentId.equals(other.studentId))
             return false;
         return true;
     }

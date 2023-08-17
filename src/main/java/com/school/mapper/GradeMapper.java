@@ -13,15 +13,17 @@ import com.school.model.Grade;
 public interface GradeMapper {
     GradeMapper INSTANCE = Mappers.getMapper(GradeMapper.class);
 
-    @Mapping(source = "id", target = "key")
+    @Mapping(target = "key", source = "id")
+    @Mapping(target = "studentId", source = "student.id")
     GradeVO toVO(Grade grade);
 
-    @Mapping(source = "key", target = "id")
+    @Mapping(target = "id", source = "key")
+    @Mapping(target = "student.id", source = "studentId")
     Grade toEntity(GradeVO gradeVO);
 
-    @Mapping(source = "id", target = "key")
+    @Mapping(target = "key", source = "id")
     List<GradeVO> toVOList(List<Grade> grades);
 
-    @Mapping(source = "key", target = "id")
+    @Mapping(target = "id", source = "key")
     List<Grade> toEntityList(List<GradeVO> grades);
 }
