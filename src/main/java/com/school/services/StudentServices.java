@@ -104,4 +104,27 @@ public class StudentServices {
         repository.delete(entity);
     }
 
+    public PagedModel<EntityModel<StudentVO>> findStudentByName(String firstName, Pageable pageable) {
+        logger.info("Finding by name");
+
+        var studentPage = repository.findStudentByName(firstName, pageable);
+
+        var studentVoPage = studentPage.map(s -> StudentMapper.INSTANCE.toVO(s));
+        studentVoPage.map(s -> {
+            try {
+                return s.add(linkTo(methodOn(StudentController.class).findById(s.getKey())).withSelfRel());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return s;
+        });
+
+        Link link = linkTo(
+                methodOn(StudentController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc"))
+                .withSelfRel();
+
+        return assembler.toModel(studentVoPage, link);
+
+    }
+
 }

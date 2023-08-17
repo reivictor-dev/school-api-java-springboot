@@ -47,7 +47,7 @@ public class StudentController {
                         @RequestParam(value = "size", defaultValue = "10") Integer size,
                         @RequestParam(value = "direction", defaultValue = "asc") String direction) {
                 var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
-                Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "first_name"));
+                Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "firstName"));
                 return ResponseEntity.ok(service.findAll(pageable));
         }
 
@@ -96,6 +96,16 @@ public class StudentController {
         public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
                 service.delete(id);
                 return ResponseEntity.noContent().build();
+        }
+
+        public ResponseEntity<PagedModel<EntityModel<StudentVO>>> findStudentByName(
+                        @PathVariable(value = "firstName") String firstName,
+                        @RequestParam(value = "page", defaultValue = "0") Integer page,
+                        @RequestParam(value = "size", defaultValue = "10") Integer size,
+                        @RequestParam(value = "direction", defaultValue = "asc") String direction) {
+                var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+                Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "firstName"));
+                return ResponseEntity.ok(service.findStudentByName(firstName, pageable));
         }
 
 }

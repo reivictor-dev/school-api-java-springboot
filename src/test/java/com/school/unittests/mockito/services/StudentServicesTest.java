@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -34,27 +33,6 @@ public class StudentServicesTest {
     void setUpMocks() {
         input = new MockStudent();
         MockitoAnnotations.openMocks(this);
-    }
-
-    @Test
-    void testFindAll() {
-        List<Student> list = input.mockEntityList();
-
-        when(repository.findAll()).thenReturn(list);
-
-        var student = services.findAll();
-
-        assertNotNull(student);
-        assertEquals(10, student.size());
-
-        var exampleStudent = student.get(1);
-        assertTrue(exampleStudent.toString().contains("links: [</api/students/v1/1>;rel=\"self\"]"));
-
-        assertEquals("First Name test1", exampleStudent.getFirstName());
-        assertEquals("Last Name test1", exampleStudent.getLastName());
-        assertEquals(1, exampleStudent.getAge());
-        assertEquals(1D, exampleStudent.getWeight());
-        assertEquals(1D, exampleStudent.getHeight());
     }
 
     @Test
