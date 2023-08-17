@@ -98,6 +98,14 @@ public class StudentController {
                 return ResponseEntity.noContent().build();
         }
 
+        @GetMapping(value = "/findByStudentName/{firstName}")
+        @Operation(summary = "finds students by name", description = "finds student by name", tags = "student", responses = {
+                        @ApiResponse(description = "Success", responseCode = "200", content = @Content),
+                        @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                        @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                        @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                        @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
+        })
         public ResponseEntity<PagedModel<EntityModel<StudentVO>>> findStudentByName(
                         @PathVariable(value = "firstName") String firstName,
                         @RequestParam(value = "page", defaultValue = "0") Integer page,
