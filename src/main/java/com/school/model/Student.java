@@ -12,11 +12,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "student")
 public class Student implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -45,7 +47,14 @@ public class Student implements Serializable {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Grade> grades = new ArrayList<>();
 
+    @OneToOne(mappedBy = "student")
+    private ProfilePicture profilePicture;
+
     public Student() {
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
     }
 
     public Long getId() {
@@ -112,6 +121,14 @@ public class Student implements Serializable {
         this.grades = grades;
     }
 
+    public ProfilePicture getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(ProfilePicture profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -124,6 +141,7 @@ public class Student implements Serializable {
         result = prime * result + ((weight == null) ? 0 : weight.hashCode());
         result = prime * result + ((height == null) ? 0 : height.hashCode());
         result = prime * result + ((grades == null) ? 0 : grades.hashCode());
+        result = prime * result + ((profilePicture == null) ? 0 : profilePicture.hashCode());
         return result;
     }
 
@@ -176,7 +194,11 @@ public class Student implements Serializable {
                 return false;
         } else if (!grades.equals(other.grades))
             return false;
+        if (profilePicture == null) {
+            if (other.profilePicture != null)
+                return false;
+        } else if (!profilePicture.equals(other.profilePicture))
+            return false;
         return true;
     }
-
 }
